@@ -52,23 +52,35 @@ The following example uses `rbd-provisioner-1` as the identity for the instance 
 docker run -ti -v /root/.kube:/kube -v /var/run/kubernetes:/var/run/kubernetes --privileged --net=host rbd-provisioner /usr/local/bin/rbd-provisioner -master=http://127.0.0.1:8080 -kubeconfig=/kube/config -id=rbd-provisioner-1
 ```
 
-Alternatively, deploy it in kubernetes, see [deployment](deploy/README.md).
+## User Guide
 
-* Create a RBD Storage Class
+These instructions reflect the latest version of the codebase. 
 
-Replace Ceph monitor's IP in [examples/class.yaml](examples/class.yaml) with your own and create storage class:
+### Deployment in Kubernetes
+
+See [deployment](deploy/README.md).
+
+### Configure secrets
+
+First, you need get two secrets 
+
+### Configure Storage Class
+
+According you setup, update parameters in yaml, e.g. replace Ceph monitor's IP
+in [examples/class.yaml](examples/class.yaml) with your own and create storage
+class:
 
 ```bash
 kubectl create -f examples/class.yaml
 ```
 
-* Create a claim
+### Create a PV claim
 
 ```bash
 kubectl create -f examples/claim.yaml
 ```
 
-* Create a Pod using the claim
+### Create a Pod using the claim
 
 ```bash
 kubectl create -f examples/test-pod.yaml
